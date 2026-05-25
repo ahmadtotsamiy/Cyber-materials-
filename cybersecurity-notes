@@ -1,0 +1,180 @@
+## 💻 Windows Команды - Полная шпаргалка
+
+## 📡 Сеть (ipconfig)
+
+`textipconfig                    → IP и адаптеры
+ipconfig /all              → Полная информация
+ipconfig /all | findstr dns → Только DNS
+ipconfig /release          → Освободить IP
+ipconfig /renew            → Новый IP от DHCP
+ipconfig /displaydns       → DNS кеш
+ipconfig /displaydns | clip→ DNS в буфер
+ipconfig /flushdns         → Очистить DNS кеш`
+
+## 🔍 DNS (nslookup)
+
+`textnslookup google.com 8.8.8.8    → DNS запрос
+nslookup -type=mx google.com   → Почта MX
+nslookup -type=txt google.com  → TXT записи
+nslookup -type=ptr 8.8.8.8     → Reverse DNS`
+
+## ⚙️ Система
+
+`textcls                        → Очистить экран
+getmac /v                  → Все MAC адреса
+powercfg /energy           → Энергопотребление
+powercfg /batteryreport    → Отчет батареи
+assoc                      → Ассоциации файлов`
+
+## 🧠 Процессы
+
+`texttasklist                   → Все процессы
+tasklist /v                → Подробно
+tasklist /fi "chrome.exe"  → Фильтр по имени
+tasklist | find "chrome"   → Поиск по имени
+tasklist | find "1234"     → Поиск по PID
+tasklist /fo list          → Формат список
+tasklist /fo csv           → Формат CSV
+
+taskkill /pid 1234         → Убить по PID
+taskkill /im chrome.exe    → Убить по имени
+taskkill /f /pid 1234      → Принудительно
+
+pslist                     → Sysinternals процессы
+pslist -d                  → С потоками
+pskill 1234                → Убить процесс
+pssuspend chrome.exe       → Приостановить
+pssuspend -r chrome.exe    → Возобновить`
+
+## 🌐 Netsh + Сеть
+
+`textnetsh                      → Сетевой помощник
+netsh interface show interface → Интерфейсы
+netsh interface ip show address | findstr IP → IP адреса
+netsh interface ip show dnsservers → DNS сервера
+netsh firewall set allprofiles state off → Выкл firewall
+netsh firewall set allprofiles state on  → Вкл firewall
+
+ping google.com            → Тест связи
+ping -t google.com         → Непрерывный ping
+tracert google.com         → Маршрут пакетов
+tracert -d google.com      → Быстрая трассировка
+
+netstat                    → Соединения
+netstat -af                → Порты + адреса
+netstat -o                 → С PID
+netstat -e -t 5            → Статистика трафика
+
+route print                → Маршруты
+route add                  → Добавить маршрут
+route delete               → Удалить маршрут`
+
+## 🔄 Система + Загрузка
+
+`textshutdown                   → Выключить/перезагрузить
+shutdown /r /fw /f /t 0   → BIOS меню
+
+**Порядок загрузки:**
+SYSTEM(4) → smss.exe → csrss.exe + winlogon.exe → 
+userinit.exe → explorer.exe + wininit.exe (сервисы)`
+
+## 💾 Файлы + Диски
+
+`textstrings file.exe           → Строки из exe
+chkdsk /f                  → Проверка диска
+sfc /scannow               → Системные файлы
+DISM /Online /Cleanup /CheckHealth → Образ Win
+DISM /Online /Cleanup /RestoreHealth → Восстановление`
+
+## 🔑 Хеши паролей
+
+`textreg save HKLM\SAM sam.hive      → Сохранить SAM
+reg save HKLM\SYSTEM sys.hive   → Сохранить SYSTEM
+
+impacket-secretsdump -sam sam.hive -system sys.hive LOCAL
+→ hacker123:1004:...:NT_HASH:::
+
+john --format=NT ntlm.hash --wordlist=rockyou.txt
+john --show ntlm.hash`
+
+## 🗂️ Реестр
+
+`textHKCR → Ассоциации файлов (.txt=notepad)
+HKCU → Текущий пользователь
+HKLM → Система + SAM хеши
+HKU  → Все пользователи
+HKCC → Текущая конфигурация`
+
+**Иконка:** 💻 | **Цвет:** Темно-синий градиент
+
+## ➕ Дополнительные полезные команды Windows
+
+## 🖥️ Системная информация
+
+`textsysteminfo              → Полная информация о системе
+wmic bios get serialnumber → Серийный номер BIOS
+wmic cpu get name       → Название процессора
+wmic memorychip get capacity → ОЗУ модули
+whoami                  → Текущий пользователь
+gpupdate /force         → Применить групповые политики`
+
+## 📁 Работа с файлами/директориями
+
+`textdir /s                  → Рекурсивный список файлов
+tree                    → Дерево папок
+robocopy C:\from C:\to → Мощное копирование
+xcopy /s /e             → Копировать папки с подпапками
+attrib -h -r -s file    → Показать скрытые файлы`
+
+## 👥 Пользователи и группы
+
+`textnet user                → Список пользователей
+net user hacker123      → Инфо о пользователе
+net user hacker123 pass123 → Сменить пароль
+net localgroup admins   → Локальные администраторы
+net share               → Общие папки`
+
+## 🔐 Безопасность
+
+`textcertmgr.msc             → Сертификаты
+secpol.msc              → Локальные политики
+eventvwr                → Просмотр событий
+wevtutil qe Security /c:10 /rd:true /f:text → Последние 10 событий безопасности`
+
+## 💾 Работа с дисками
+
+`textdiskpart                → Менеджер дисков
+wmic logicaldisk get size,freespace,caption → Диски и место
+defrag C: /U            → Дефрагментация
+fsutil volume diskfree C: → Свободное место на диске`
+
+## 🕐 Планировщик и службы
+
+`textschtasks /query         → Все задачи планировщика
+sc query                → Список служб
+sc stop ServiceName     → Остановить службу
+sc config ServiceName start= disabled → Отключить службу`
+
+## 📊 Мониторинг
+
+`textresmon                  → Монитор ресурсов
+perfmon                 → Счетчики производительности
+typeperf "\Processor(_Total)\% Processor Time" → % CPU`
+
+## 🔄 Быстрые утилиты
+
+`textcontrol                 → Панель управления
+msconfig                → Конфигурация системы
+services.msc            → Службы
+lusrmgr.msc             → Локальные пользователи
+compmgmt.msc            → Управление компьютером`
+
+## 🛠️ Восстановление
+
+`textbcdedit                 → Редактор загрузки
+bootrec /fixmbr         → Восстановить MBR
+sfc /scannow /offbootdir=C:\ /offwindir=C:\Windows → Проверка офлайн`
+
+**Добавь в Notion как отдельную страницу "Доп.Команды"**
+
+**Иконка:** 🛠️ **Цвет:** Зеленый градиент
